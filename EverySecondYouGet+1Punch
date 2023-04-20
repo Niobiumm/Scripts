@@ -1,0 +1,93 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local name = game.Players.LocalPlayer.Name
+
+getgenv().desertegg = false
+getgenv().autowin = false
+getgenv().autoreb = false
+
+	local Window = Rayfield:CreateWindow({
+        Name = GameName.." | "..identifyexecutor(),
+        LoadingTitle = "Welcome to my first script!",
+        LoadingSubtitle = "by luh(ZeusBahiano)",
+        ConfigurationSaving = {
+                Enabled = false,
+                FolderName = nil,
+                FileName = "epoc"
+            },
+                Discord = {
+                    Enabled = false,
+                    Invite = "",
+                    RememberJoins = true
+                },
+            KeySystem = false,
+            KeySettings = {
+                Title = "",
+                Subtitle = "",
+                Note = "",
+                FileName = "",
+                SaveKey = true,
+                GrabKeyFromSite = false,
+                Key = ""
+            }
+        })
+--wins/rebirths
+    local Tab = Window:CreateTab("Farming", 10058434487)
+    local Toggle = Tab:CreateToggle({
+        Name = "Auto Wins",
+        CurrentValue = false,
+        Flag = "Toggle1",
+        Callback = function(Value)
+        getgenv().autowin = Value
+        while getgenv().autowin == true do
+            firetouchinterest(game:GetService("Workspace")[name].HumanoidRootPart, game:GetService("Workspace").Wins.Stage10, 0)
+                task.wait(1)
+            firetouchinterest(game:GetService("Workspace")[name].HumanoidRootPart, game:GetService("Workspace").Wins.Stage10, 1)
+        end
+    end
+})
+    local Toggle = Tab:CreateToggle({
+        Name = "Auto Rebirth",
+        CurrentValue = false,
+        Flag = "Toggle1",
+        Callback = function(Value)
+            repeat task.wait(1) until game.Players.LocalPlayer.leaderstats.Wins.Value > 250000
+        getgenv().autoreb = Value
+        while getgenv().autoreb == true do
+            firetouchinterest(game:GetService("Workspace")[name].HumanoidRootPart, game:GetService("Workspace").Model.RebirthTouch, 0)
+             task.wait(1)
+            firetouchinterest(game:GetService("Workspace")[name].HumanoidRootPart, game:GetService("Workspace").Model.RebirthTouch, 1)
+	    end
+    end
+})
+--eggs
+local Tab = Window:CreateTab("Eggs", 10058434487)
+local Button = Tab:CreateButton({
+    Name = "Desert egg (25k wins)",
+    Callback = function()
+    game:GetService("Workspace")[name].HumanoidRootPart.CFrame = game:GetService("Workspace").Eggs.Desert.PriceBrick.CFrame
+        task.wait(1)
+        local args = {
+            [1] = "Desert",
+            [2] = "Single"
+        }     
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("EggOpened"):InvokeServer(unpack(args))
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Desert egg",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+    getgenv().desertegg = Value
+    while getgenv().desertegg == true do
+        game:GetService("Workspace")[name].HumanoidRootPart.CFrame = game:GetService("Workspace").Eggs.Desert.PriceBrick.CFrame
+        task.wait(1)
+        local args = {
+            [1] = "Desert",
+            [2] = "Single"
+        }     
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("EggOpened"):InvokeServer(unpack(args))        
+    end
+end
+})
